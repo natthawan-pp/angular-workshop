@@ -1,0 +1,9 @@
+
+
+input.ng-invalid.ng-dirty{
+    background-color: #f8b7bd;
+}
+
+.margin-left-space> ::ng-deep div,button.margin-left-space {
+    margin-left: 5px!important;
+}

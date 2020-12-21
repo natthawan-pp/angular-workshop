@@ -1,0 +1,146 @@
+<br><br>
+{{editFormGroup.getRawValue() | json}}
+<br><br>
+<div [formGroup]="editFormGroup">
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">Department</div>
+    <div class="ui-g-3">
+      <p-dropdown formControlName="department" [style]="{'width':'180px','min-width':'8.5em'}"
+        [options]="departmentOptions"></p-dropdown>
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2"></div>
+    <div class="ui-g-3"></div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">Job Title</div>
+    <div class="ui-g-3">
+      <p-dropdown formControlName="jobTitle" [style]="{'width':'180px','min-width':'8.5em'}"
+      [options]="jobtitleOptions"></p-dropdown>
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2"></div>
+    <div class="ui-g-3"></div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">Gender</div>
+    <div class="ui-g-3">
+      <p-radioButton formControlName="gender" name="gender" value="M" label="Male"></p-radioButton>
+      <p-radioButton formControlName="gender" name="gender" value="F" label="Female"></p-radioButton>
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2"></div>
+    <div class="ui-g-3"></div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">Title</div>
+    <div class="ui-g-3">
+      <p-dropdown formControlName="title" [style]="{'width':'180px','min-width':'8.5em'}" [options]="titleOptions">
+      </p-dropdown>
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2"></div>
+    <div class="ui-g-3"></div>
+  </div>
+
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">First Name</div>
+    <div class="ui-g-3">
+      <input type="text" formControlName="firstName" pInputText />
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2"></div>
+    <div class="ui-g-3"></div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">Last Name</div>
+    <div class="ui-g-3">
+    <input type="text" formControlName="lastName" pInputText />
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2"></div>
+    <div class="ui-g-3"></div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">Address</div>
+    <div class="ui-g-3">
+      <textarea formControlName="address" [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize"></textarea>
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2"></div>
+    <div class="ui-g-3"></div>
+  </div>
+  
+</div>
+
+
+<div class="ui-g" *ngIf="isEditMode()">
+  <div class="ui-g-12" style="text-align:right">
+    <p-button (onClick)="displaySkillDialog = true" type="button" label="Add" ></p-button>
+  </div>
+</div>
+
+
+<div class="ui-g" *ngIf="isEditMode()">
+  <div class="ui-g-12" style="text-align: center">
+    <p-table [value]="valueList" [paginator]="true" [rows]="10" selectionMode="single"
+    (onRowSelect)="onRowSkillSelect($event)">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Skill</th>
+          <th>Description</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-bean let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="bean">
+          <td>{{bean.skillName}}</td>
+          <td>{{bean.skillDesc}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+  <div class="ui-g">
+    <div class="ui-g-12" style="text-align: center">
+      <p-button type="button" label="Submit" (onClick)="onSubmit($event)"></p-button>
+      <p-button type="button" label="Clear" (onClick)="onClear($event)"></p-button>
+      <p-button type="button" label="Back" (onClick)="onBack($event)"></p-button>
+    </div>
+  </div>
+
+  <p-dialog [closeOnEscape]="true" header="Skill" [(visible)]="displaySkillDialog" [formGroup]="skillFormGroup"
+    [responsive]="true" showEffect="fade" [modal]="true" [style]="{width: '600px', height: '200px'}" blockScroll="true"
+    dismissableMask="true" [positionTop]="20" [resizable]="true" appendTo="body">
+    {{skillFormGroup.getRawValue() | json}}
+    <div class="ui-g">
+      <div class="ui-g-6">Skill</div>
+      <div class="ui-g-6"> <input type="text" formControlName="skillName" pInputText />
+      </div>
+    </div>
+    <div class="ui-g">
+      <div class="ui-g-6">Skill Desc</div>
+      <div class="ui-g-6"><input type="text" formControlName="skillDesc" pInputText /></div>
+    </div>
+    <div class="ui-g">
+      <div class="ui-g-12" style="text-align: center">
+        <p-button type="button" (onClick)="saveSkill()" label="Save"></p-button>
+        <p-button type="button" (onClick)="cancelSkill()" label="Cancel"></p-button>
+        <p-button type="button" label="Delete"></p-button>
+  
+      </div>
+    </div>
+  </p-dialog>

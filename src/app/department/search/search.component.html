@@ -1,0 +1,231 @@
+<!-- <div style="background-color: red">
+  This is {{ animal }}
+  <input type="text" />
+  <button type="button" (click)="onClick()">click</button>
+  <button type="button" (click)="onClick2()">click</button>
+  
+
+</div>
+<div>
+  {{ counter }}
+
+  <button type="button" pButton (click)="addCount()" label="Increase"></button>
+  <button
+    pButton
+    type="button"
+    label="Decrease"
+    (click)="substractCount($event)"
+  ></button>
+</div> -->
+
+
+{{ departmentForm.getRawValue() | json }}
+<div style="text-align:center">
+  <h1>{{ topicHeader }}</h1>
+</div>
+<div [formGroup]="departmentForm">
+  <div class="ui-g">
+    <div class="ui-g-2"></div>
+    <div class="ui-g-2" style="text-align: right">Department</div>
+    <div class="ui-g-3">
+      <input
+        type="text" appAutoSearch (autoSearch)="onSearch($event)"
+        formControlName="departmentName"
+        #department
+        (input)="myOnInput(department.value)"
+        pInputText
+      />
+    </div>
+    <div class="ui-g-4" *ngIf="control('departmentName').dirty">
+      <p-message
+        *ngIf="control('departmentName').hasError('required')"
+        severity="error"
+        text="Field is required"
+      ></p-message>
+      <p-message
+        *ngIf="control('departmentName').hasError('minlength')"
+        severity="error"
+        text="minLength 3"
+      ></p-message>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-2"></div>
+    <div class="ui-g-2" style="text-align: right">Province</div>
+    <div class="ui-g-8">
+      <ng-container *ngIf="!provinceCustom; else provinceCustomTemplate">
+        <p-dropdown
+          formControlName="province"
+          [style]="{ width: '176px', 'min-width': '8.5em' }"
+          [options]="dropdownOptions"
+        ></p-dropdown>
+      </ng-container>
+      <ng-template #provinceCustomTemplate>
+        <input type="text" pInputText formControlName="province" />
+      </ng-template>
+
+      <p-checkbox
+        class="margin-left-space"
+        name="customProvince"
+        value="custom"
+        label="custom"
+        (onChange)="onCustomProvince($event)"
+        *ngIf="!disabled"
+      ></p-checkbox>
+    </div>
+  </div>
+  <ng-template #customCheckboxBudget>
+    <!-- <p-toggleButton [formControl]="customBudgetControl" onLabel="Range" offLabel="Custom" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width':'90px'}" (onChange)="onCustomBudget($event)"></p-toggleButton> -->
+    <p-checkbox
+      [binary]="true"
+      [formControl]="customBudgetControl"
+      class="margin-left-space"
+      name="customBudget"
+      value="custom"
+      label="custom"
+      (onChange)="onCustomBudget($event)"
+      *ngIf="!disabled"
+    ></p-checkbox>
+  </ng-template>
+
+  <ng-container *ngIf="(showBudget&& mode==='search') else editBudgetTemplate">
+    <ng-container *ngIf="!customBudgetControl.value; else budgetCustomTemplate">
+      <div class="ui-g">
+        <div class="ui-g-2"></div>
+        <div class="ui-g-2" style="text-align: right">Budget</div>
+        <div class="ui-g-8">
+          <p-dropdown
+            [style]="{ width: '176px', 'min-width': '8.5em' }"
+            [options]="budgetRangeOptions"
+            (onChange)="onBudgetRangeOptionsChange($event)"
+          ></p-dropdown>
+          <ng-container *ngTemplateOutlet="customCheckboxBudget"></ng-container>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #budgetCustomTemplate>
+      <div class="ui-g">
+        <div class="ui-g-2"></div>
+        <div class="ui-g-2" style="text-align: right">Budget</div>
+        <div class="ui-g-3">
+          <input formControlName="budgetTo" type="text" pInputText />
+          <ng-container *ngTemplateOutlet="customCheckboxBudget"></ng-container>
+        </div>
+        <div class="ui-g-5">
+          <ng-container *ngIf="control('budgetTo').dirty">
+            <p-message *ngIf="control('budgetTo').hasError('pattern')"
+            severity="error"
+            text="Must be number"
+          ></p-message>
+          </ng-container>
+        </div>
+      </div>
+      <div class="ui-g">
+        <div class="ui-g-2"></div>
+        <div class="ui-g-2" style="text-align: right">To</div>
+        <div class="ui-g-3">
+          <input formControlName="budgetFrom" type="text" pInputText />
+        </div>
+        <div class="ui-g-5">
+          <ng-container *ngIf="control('budgetFrom').dirty">
+            <p-message
+            severity="error" *ngIf="control('budgetFrom').hasError('pattern')"
+            text="Must be number"></p-message>
+          </ng-container>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #editBudgetTemplate>
+    <app-responsive-grid>
+      <ng-container class="grid-text">
+          Budget
+      </ng-container>
+      <ng-container class="grid-component">
+          <input type="text" formControlName="budget" pInputText />
+      </ng-container>
+      <ng-container class="grid-component">
+        <p-message
+            severity="error" *ngIf="control('budget').hasError('pattern')"
+            text="Must be number"></p-message>
+    </ng-container>
+    </app-responsive-grid>
+  </ng-template>
+  <div class="ui-g">
+    <div class="ui-g-2"></div>
+    <div class="ui-g-2" style="text-align: right">Status</div>
+    <div class="ui-g-8">
+      <!-- Template Reference -->
+      <p-radioButton
+        formControlName="status"
+        #rad1
+        name="group1"
+        value="Y"
+        (onClick)="onRadioClick(rad1.value)"
+        label="Active"
+      ></p-radioButton>
+      &nbsp;&nbsp;
+      <p-radioButton
+        formControlName="status"
+        #rad2
+        (onClick)="onRadioClick(rad2.value)"
+        name="group1"
+        value="N"
+        label="Deactive"
+      ></p-radioButton>
+    </div>
+  </div>
+    <app-responsive-grid>
+      <ng-container class="grid-text">
+          Remark
+      </ng-container>
+      <ng-container class="grid-component">
+          <input type="text" formControlName="remark" pInputText />
+      </ng-container>
+      <ng-container class="grid-message">
+        <!-- message -->
+    </ng-container>
+    </app-responsive-grid>
+
+  <app-responsive-grid>
+    <ng-container class="grid-text">
+        Telephone
+    </ng-container>
+    <ng-container class="grid-component">
+        <input type="text" formControlName="telephone" pInputText />
+    </ng-container>
+  </app-responsive-grid>
+
+  <div *ngIf="!disabled" class="ui-g" style="text-align:center">
+    <div class="ui-g-12">
+      <ng-container *ngIf="mode==='search'; else buttonTemplate">
+           <button
+        pButton
+        id="searchButton"
+        type="button"
+        label="Search"
+        appDebounceButton
+        (debounceClick)="onSearch($event)"
+      ></button>
+      </ng-container>
+      <ng-template #buttonTemplate> 
+          <button
+          pButton
+          type="button"
+          label="Save"
+          appDebounceButton
+          (debounceClick)="onSave($event)"
+        ></button>
+      </ng-template>
+      &nbsp;&nbsp;
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        appDebounceButton
+        (debounceClick)="onCancel($event)"
+      ></button>
+    </div>
+  </div>
+</div>

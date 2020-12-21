@@ -1,0 +1,36 @@
+th {
+    font-size: 15px;
+}
+
+td.td-constant{
+    text-align: center;
+}
+
+td.td-text {
+    text-align: left;
+}
+
+td.td-number {
+    text-align: right;
+}
+
+button.margin-left-space {
+    margin-left: 5px!important;
+}
+
+:host ::ng-deep .margin-space-around {
+    margin-left: 2px!important;
+    margin-right: 2px!important;
+}
+
+:host ::ng-deep  .ui-table .ui-table-tbody > tr:nth-child(even) {
+    background-color: #8dcdff54;
+}
+
+:host ::ng-deep .ui-table .ui-table-thead > tr > th {
+    padding: 0.571em 0.857em;
+    border: 1px solid #c8c8c8;
+    font-weight: 700;
+    color: #333333;
+    background-color: #6ab7f194;
+}

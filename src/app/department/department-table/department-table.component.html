@@ -1,0 +1,77 @@
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast position="top-center"></p-toast>
+<p-table  [value]="valueList$ | async" [paginator]="true" [rowsPerPageOptions]="[5,10,15]" [rows]="10"  
+selectionMode="single" (onRowSelect)="onTableRowSelect($event)">  
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Code</th> 
+          <th>Department</th>
+          <th>Province</th>
+          <th>Budget</th>
+          <th>Status</th>
+          <th>Telephone</th>
+          <th>
+              <button pButton type="button" (click)="openDialogForAdd()" icon="pi pi-plus" iconPos="left"></button>
+              <button pButton type="button"  (click)="openTrashList()" icon="pi pi-trash" class="margin-left-space" iconPos="left"></button>
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-bean let-rowIndex="rowIndex">
+      <tr appBudgetOverload [department]="bean" [pSelectableRow]="bean">
+          <td class="td-constant">{{bean.departmentCode}}</td>
+          <td class="td-text">{{bean.departmentName}}</td>
+          <td class="td-text">{{bean.province}}</td>
+          <td class="td-number">{{bean.budget | number:'1.2'}}</td> 
+          <td class="td-constant">{{bean.status | status:'TH' }}</td>
+          <td class="td-text">{{bean.telephone}}</td>
+          <td class="td-constant">
+            <p-button type="button" styleClass="ui-button-raised ui-button-danger margin-space-around" 
+            (onClick)="onRemoveBtnClick(bean.departmentCode,rowIndex)" icon="pi pi-minus-circle"></p-button>
+            <p-button type="button" [routerLink]="'/department/view/'+bean.departmentCode" styleClass="margin-space-around" 
+             icon="pi pi-eye"></p-button>
+            <p-button type="button" [routerLink]="['edit',bean.departmentCode]" styleClass="margin-space-around" 
+             icon="pi pi-pencil"></p-button>
+        </td>
+      </tr> 
+  </ng-template>
+</p-table>
+
+<p-dialog [closeOnEscape]="true" header="Trash" [positionLeft]="10" [positionTop]="10" transitionOptions="150ms cubic-bezier(0, 0, 0.2, 1)" [(visible)]="displaySelectionDelete" 
+[responsive]="true" showEffect="fade" [style]="{width: '400px'}"
+blockScroll="true"
+[positionTop]="20"
+[resizable]="false"
+>
+<p-table  [value]="trashList"  [paginator]="true"  [rows]="5" paginatorPosition="top">
+    <ng-template pTemplate="header">
+            <tr>
+                    <th style="width:15%">Code</th>
+                    <th>Name</th>
+                    <th style="width:16%">Re</th>
+                    <th style="width:16%">Del</th>
+            </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-department let-rowIndex="rowIndex">
+            <tr>
+                    <td class="td-constant" style="text-decoration: line-through">{{department.departmentCode}}</td>
+                    <td  class="td-text">{{department.departmentName}}</td>
+                    <td class="td-constant"><button pButton type="button"  class="ui-button-success" (click)="onRecover(rowIndex)" icon="pi pi-replay" iconPos="left"></button></td>
+                    <td class="td-constant"><button pButton type="button"  class="ui-button-danger" (click)="onDeleteTrash(rowIndex)" icon="pi pi-trash" iconPos="left"></button></td>
+            </tr>
+    </ng-template> 
+</p-table>
+
+</p-dialog>
+  
+<p-dialog [closeOnEscape]="true" header="Department" [(visibl ve)]="displaySearchComponent"
+[responsive]="true" showEffect="fade" [modal]="true" 	[style]="{width: '600px', height: '200px'}"
+blockScroll="true"
+dismissableMask="true"
+[positionTop]="20"
+[resizable]="true"
+appendTo="body"
+>
+<app-search mode="edit" #searchComponent [resetObject]="rowSelectedObject" (saveClick)="onSaveDepartment($event)"></app-search>
+</p-dialog>
+

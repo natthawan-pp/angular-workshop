@@ -1,0 +1,41 @@
+<div class="ui-g">
+  <div class="ui-g-12" style="text-align:right">
+    <p-button type="button" label="Add" routerLink="/employee/add"></p-button>
+
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-12" style="text-align: center">
+
+    <p-table [value]="valueList" [paginator]="true" [rows]="10">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Department</th>
+          <th>Job Title</th>
+          <th>Job Type</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Edit</th>
+          <th>Remove</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-bean let-rowIndex="rowIndex">
+        <tr>
+          <td>{{bean.department.departmentName}}</td>
+          <td>{{bean.jobTitle.jobTitleName}}</td>
+          <td>{{bean.jobTitle.jobType }}</td>
+          <td>{{bean.title}} {{bean.firstName}} {{bean.lastName}}</td>
+          <td>{{bean.gender }}</td>
+          <td>
+            <p-button type="button" label="Edit" (onClick)="gotoEditPage(bean.employeeId)"></p-button>
+          </td>
+          <td>
+            <p-button type="button" label="Remove" (onClick)="removeEmployee(bean.employeeId)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+
+  </div>
+</div>

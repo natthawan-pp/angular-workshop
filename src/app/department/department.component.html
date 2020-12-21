@@ -1,0 +1,6 @@
+
+<app-search topicHeader="ค้นหา 1" 
+(searchClick)="fromSearchClick($event)" (cancelClick)="fromCancelClick($event)" [showBudget]="true"></app-search>
+
+<app-department-table #departmentTable></app-department-table>
+<p-chart type="bar" [data]="data"></p-chart>

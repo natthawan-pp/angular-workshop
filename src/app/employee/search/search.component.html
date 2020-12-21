@@ -1,0 +1,64 @@
+<br><br>
+{{employeeFormGroup.getRawValue() | json}}
+<br><br>
+<div [formGroup]="employeeFormGroup">
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">Department</div>
+    <div class="ui-g-3">
+      <p-dropdown formControlName="departmentCode" [style]="{'width' :'180px','min-width':'8.5em'}"
+        [options]="departmentOptions"></p-dropdown>
+    </div>
+    <div class="ui-g-1">Job Title</div>
+    <div class="ui-g-2">
+      <p-dropdown formControlName="jobTitleCode" [style]="{'width':'180px','min-width':'8.5em'}"
+        [options]="jobtitleOptions"></p-dropdown>
+    </div>
+    <div class="ui-g-3"></div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">Job Type</div>
+    <div class="ui-g-3">
+      <p-radioButton formControlName="jobType" name="jobType" value="M" label="Manage"></p-radioButton>
+      <p-radioButton formControlName="jobType" name="jobType" value="O" label="Operate"></p-radioButton>
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2"></div>
+    <div class="ui-g-3"></div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">First Name</div>
+    <div class="ui-g-3">
+      <input type="text" formControlName="firstName" pInputText />
+    </div>
+    <div class="ui-g-1">Last Name</div>
+    <div class="ui-g-2">
+      <input type="text" formControlName="lastName" pInputText />
+    </div>
+    <div class="ui-g-3"></div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2">Gender</div>
+    <div class="ui-g-3">
+      <p-radioButton formControlName="gender" name="gender" value="M" label="Male"></p-radioButton>
+      <p-radioButton formControlName="gender" name="gender" value="F" label="Female"></p-radioButton>
+    </div>
+    <div class="ui-g-1"></div>
+    <div class="ui-g-2"></div>
+    <div class="ui-g-3"></div>
+  </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12" style="text-align: center">
+        <p-button type="button" label="Search" (onClick)="onSearch($event)"></p-button>
+        <p-button type="button" label="Cancel" (onClick)="onCancel($event)"></p-button>
+      </div>
+    </div>
+</div>
+
